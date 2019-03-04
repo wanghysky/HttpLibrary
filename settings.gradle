@@ -1,0 +1,1 @@
+include ':app', ':modul-net', ':config.gradle'
