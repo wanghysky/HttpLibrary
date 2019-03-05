@@ -1,4 +1,4 @@
-package com.httplibrary.net;
+package com.httplibrary.net.api;
 
 /**
  * Created by Administrator on 2019-02-24.
@@ -10,6 +10,7 @@ public class Api {
 
     //    public static String MOVIE_HOST = "http://192.168.10.181/";
 //    public static String BASE_URL = "http://wanandroid.com/wxarticle/chapters/json/";
-    public static String BASE_URL = "http://guolin.tech/";
+//    public static String BASE_URL = "http://guolin.tech/";
+    public static String BASE_URL = "http://www.luliangdev.cn";
 
 }

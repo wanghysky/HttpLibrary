@@ -8,13 +8,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.httplibrary.net.GetCitiesCase;
+import com.httplibrary.net.GetCase;
 import com.httplibrary.net.RxObserver;
 import com.why.modul_net.Bean.BaseData;
 import com.why.modul_net.interceptor.Transformer;
-import com.why.modul_net.utils.KLog;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,43 +20,45 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity {
     private RecyclerView recycyler;
     private MyAdapter mAdapter;
-    private List<City> list = new ArrayList<>();
+    private List<BookBean> list = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        initView();
+        initData();
+    }
+
+    private void initView(){
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         mAdapter = new MyAdapter();
         recycyler = findViewById(R.id.recycyler);
         mAdapter.setData(list);
         recycyler.setAdapter(mAdapter);
         recycyler.setLayoutManager(linearLayoutManager);
-        getMovie();
     }
 
-    private void getMovie(){
-        new GetCitiesCase().getCities()
-                .compose(Transformer.<BaseData<List<City>>>switchSchedulers())
-                .subscribe(new RxObserver<List<City>>() {
+    private void initData(){
+
+        new GetCase().books().compose(Transformer.<BaseData<List<BookBean>>>switchSchedulers())
+                .subscribe(new RxObserver<List<BookBean>>() {
                     @Override
                     protected void onError(String errorMsg) {
-                        Toast.makeText(getApplicationContext(),errorMsg, Toast.LENGTH_SHORT).show();
+
                     }
 
                     @Override
-                    protected void onSuccess(List<City> data) {
-                        KLog.d("SSS","DATA :" +data);
-                        list.addAll(data);
-                        mAdapter.notifyDataSetChanged();
-
+                    protected void onSuccess(List<BookBean> data) {
+                       list.addAll(data);
+                       mAdapter.notifyDataSetChanged();
                     }
                 });
     }
 
     public class MyAdapter extends RecyclerView.Adapter<MyHolder>{
 
-        public List<City> list = new ArrayList<>();
+        public List<BookBean> list = new ArrayList<>();
 
         @Override
         public MyHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -68,7 +68,7 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         public void onBindViewHolder(MyHolder holder, int position) {
-            holder.textView.setText(list.get(position).name);
+            holder.textView.setText(list.get(position).getTitle());
         }
 
         @Override
@@ -76,7 +76,7 @@ public class MainActivity extends AppCompatActivity {
             return list.size();
         }
 
-        public void setData(List<City> list){
+        public void setData(List<BookBean> list){
             this.list = list;
             notifyDataSetChanged();
         }

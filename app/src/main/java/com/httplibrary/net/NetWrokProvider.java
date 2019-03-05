@@ -3,7 +3,6 @@ package com.httplibrary.net;
 import android.text.TextUtils;
 
 import com.alibaba.fastjson.JSONObject;
-import com.why.modul_net.config.Constant;
 import com.why.modul_net.exception.ApiException;
 import com.why.modul_net.extension.BaseNetProvider;
 import com.why.modul_net.retrofit.RequestHandler;
@@ -67,10 +66,12 @@ public class NetWrokProvider extends BaseNetProvider {
                 newBody = RequestBody.create(MediaType.parse("application/x-www-form-urlencoded"), json);
             }
             return chain.request().newBuilder()
-                    .addHeader("X-Auth-Token", Constant.accessToken)
+//                    .addHeader("X-Auth-Token", Constant.accessToken)
                     .addHeader("Authorization", "")
                     .addHeader("Platform", "android")
                     .addHeader("Accept", "text/plain; charset=utf-8")
+                    .addHeader("access-token", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiMTIzIiwiaWF0IjoxNTUxNzUxMzEwLCJleHAiOjE1NTQzNDMzMTB9.bAIimJ8uMF3kuLlir8FGShK386EyVGRqwChCVDkStwA")
+                    .addHeader("app-type", "Android")
                     .method(method, newBody)
                     .build();
         }

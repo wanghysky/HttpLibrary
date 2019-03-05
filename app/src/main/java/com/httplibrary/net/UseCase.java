@@ -1,5 +1,6 @@
 package com.httplibrary.net;
 
+import com.httplibrary.net.api.Api;
 import com.why.modul_net.retrofit.NetMgr;
 
 import java.lang.reflect.ParameterizedType;
